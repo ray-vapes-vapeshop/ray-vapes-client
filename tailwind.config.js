@@ -6,7 +6,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        inria: ['"Inria Sans"', "serif"],
+        comfortaa: ['"Comfortaa"', "cursive"],
       },
     },
   },

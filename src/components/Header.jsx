@@ -1,73 +1,153 @@
 import { Link } from "react-router-dom";
+
 const Header = () => {
   return (
-    <div className="navbar bg-base-100 shadow-sm">
-      <div className="flex-1">
+    <div className="navbar bg-base-100 shadow-sm fixed top-0 w-full z-50">
+      <div className="flex w-full justify-between">
         <Link to="/">
           <img
             className="h-14 w-17 ml-4 my-1"
             src="../assets/logos/Logo.png"
             alt="Logo"
-          ></img>
+          />
         </Link>
-      </div>
-      <div className="flex-none">
-        <div className="dropdown dropdown-end">
-          <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
-            <div className="indicator">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                {" "}
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                />{" "}
-              </svg>
-              <span className="badge badge-sm indicator-item">8</span>
+
+        {/* Desktop navigation */}
+        <ul className="hidden md:flex menu menu-horizontal px-1 gap-4 items-center">
+          <li>
+            <Link to="/electronics">Электронные сигареты</Link>
+          </li>
+          <li>
+            <Link to="/snus">Снюс</Link>
+          </li>
+          <li>
+            <Link to="/cigarettes">Сигареты</Link>
+          </li>
+          <li>
+            <Link to="/liquids">Жидкости</Link>
+          </li>
+          <li>
+            <Link to="/delivery">Доставка</Link>
+          </li>
+        </ul>
+
+        <div className="flex flex-row my-auto">
+          {/* Cart Icon */}
+          <div className="dropdown dropdown-end">
+            <div
+              tabIndex={0}
+              role="button"
+              className="btn btn-ghost btn-circle"
+            >
+              <div className="indicator">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+                  />
+                </svg>
+                <span className="badge badge-sm indicator-item">8</span>
+              </div>
+            </div>
+            <div
+              tabIndex={0}
+              className="card card-compact dropdown-content bg-base-100 z-10 mt-3 w-52 shadow"
+            >
+              <div className="card-body">
+                <span className="text-lg font-bold">8 Items</span>
+                <span className="text-info">Subtotal: $999</span>
+                <div className="card-actions">
+                  <button className="btn btn-primary btn-block">
+                    View cart
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
-          <div
-            tabIndex={0}
-            className="card card-compact dropdown-content bg-base-100 z-1 mt-3 w-52 shadow"
-          >
-            <div className="card-body">
-              <span className="text-lg font-bold">8 Items</span>
-              <span className="text-info">Subtotal: $999</span>
-              <div className="card-actions">
-                <button className="btn btn-primary btn-block">View cart</button>
+
+          {/* Mobile Navigation Dropdown */}
+          <div className="drawer drawer-end md:hidden my-auto">
+            <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
+            <div className="drawer-content">
+              {/* Page content here */}
+              <label htmlFor="my-drawer-4">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="size-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+                  />
+                </svg>
+              </label>
+            </div>
+
+            <div className="drawer-side">
+              <label
+                htmlFor="my-drawer-4"
+                aria-label="close sidebar"
+                className="drawer-overlay"
+              ></label>
+              <div className="menu bg-base-200 text-base-content min-h-full w-full p-4 relative">
+                {/* Кнопка закриття зверху */}
+                <label
+                  htmlFor="my-drawer-4"
+                  className="absolute top-7 right-3 cursor-pointer"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="size-5"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M6 18 18 6M6 6l12 12"
+                    />
+                  </svg>
+                </label>
+
+                <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
+                  <li className="p-2 mt-4">
+                    <Link to="/home">Главная</Link>
+                  </li>
+                  <li className="p-2">
+                    <Link to="/electronics">Электронные сигареты</Link>
+                  </li>
+                  <li className="p-2">
+                    <Link to="/snus">Снюс</Link>
+                  </li>
+                  <li className="p-2">
+                    <Link to="/cigarettes">Сигареты</Link>
+                  </li>
+                  <li className="p-2">
+                    <Link to="/liquids">Жидкости</Link>
+                  </li>
+                  <li className="p-2">
+                    <Link to="/delivery">Доставка</Link>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
         </div>
-
-        <ul className="menu menu-horizontal px-1">
-          <li>
-            <details className="w-[170px]">
-              <summary>Навигация</summary>
-              <ul className="bg-base-100 rounded-t-none p-2">
-                <li>
-                  <Link to="/electronics">Электронные сигареты</Link>
-                </li>
-                <li>
-                  <Link to="/snus">Снюс</Link>
-                </li>
-                <li>
-                  <Link to="/cigarettes">Сигареты</Link>
-                </li>
-                <li>
-                  <Link to="/delivery">Доставка</Link>
-                </li>
-              </ul>
-            </details>
-          </li>
-        </ul>
       </div>
     </div>
   );
