@@ -1,19 +1,17 @@
-import React from "react";
 import Header from "../components/Header";
 import Product from "../components/Product";
+
+const products = [1, 2, 3, 4, 5, 6, 7];
 
 const Home = () => {
   return (
     <div>
       <Header />
       <div className="h-18"></div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 p-4">
-        <Product />
-        <Product />
-        <Product />
-        <Product />
-        <Product />
-        <Product />
+      <div className="flex flex-wrap items-start gap-4 p-4 justify-center">
+        {products.map((id) => (
+          <Product key={id} id={id} />
+        ))}
       </div>
     </div>
   );
