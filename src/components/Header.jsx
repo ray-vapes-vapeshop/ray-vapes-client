@@ -27,7 +27,7 @@ const Header = () => {
             <Link to="/liquids">Жидкости</Link>
           </li>
           <li>
-            <Link to="/delivery">Доставка</Link>
+            <Link to="/delivery">Доставка и инструкция</Link>
           </li>
         </ul>
 
@@ -141,7 +141,7 @@ const Header = () => {
                     <Link to="/liquids">Жидкости</Link>
                   </li>
                   <li className="p-2">
-                    <Link to="/delivery">Доставка</Link>
+                    <Link to="/delivery">Доставка и инструкция</Link>
                   </li>
                 </ul>
               </div>
