@@ -50,6 +50,7 @@ const Product = ({
               Блок: {(priceCentsBlock / 100).toFixed(2)}€
             </>
           )}
+          {type === "LIQUID" && <>Цена - {(priceCents / 100).toFixed(2)}€</>}
           {hasFlavours && (
             <div className="mt-3 w-[150px]">
               <label
