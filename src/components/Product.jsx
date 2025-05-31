@@ -1,6 +1,17 @@
 import { useState } from "react";
 
-const Product = ({ id, name, imageUrl, priceCents, quantity, variants }) => {
+const Product = ({
+  id,
+  name,
+  imageUrl,
+  priceCents,
+  variants,
+  puffs,
+  nicotinePct,
+  chargingType,
+  flavourMode,
+  type
+}) => {
   const [, setModalId] = useState(null);
 
   const hasFlavours = variants && variants.length > 0;
@@ -17,7 +28,18 @@ const Product = ({ id, name, imageUrl, priceCents, quantity, variants }) => {
         <div className="collapse-content text-sm">
           Цена: {(priceCents / 100).toFixed(2)}€
           <br />
-          Количество: {quantity} шт.
+          {type === "ELECTRONIC_CIGARETTE" && (
+            <>
+              Кол-во затяжек: {puffs}
+              <br />
+              Никотин: {nicotinePct} %
+              <br />
+              Зарядка: {chargingType.replaceAll('_', '-')}
+              <br />
+              Разнообразие вкуса: {flavourMode.replaceAll('_', ' ')}
+              <br />
+            </>
+          )}
           {hasFlavours && (
             <div className="mt-3 w-[150px]">
               <label
