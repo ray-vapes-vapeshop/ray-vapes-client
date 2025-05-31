@@ -10,7 +10,9 @@ const Product = ({
   nicotinePct,
   chargingType,
   flavourMode,
-  type
+  priceCentsPack,
+  priceCentsBlock,
+  type,
 }) => {
   const [, setModalId] = useState(null);
 
@@ -26,18 +28,26 @@ const Product = ({
         <input type="checkbox" id={`accordion-${id}`} />
         <div className="collapse-title font-bold text-md">{name}</div>
         <div className="collapse-content text-sm">
-          Цена: {(priceCents / 100).toFixed(2)}€
-          <br />
+          {type === "SNUS" && <>Цена - {(priceCents / 100).toFixed(2)}€</>}
           {type === "ELECTRONIC_CIGARETTE" && (
             <>
+              Цена - {(priceCents / 100).toFixed(2)}€
+              <br />
               Кол-во затяжек: {puffs}
               <br />
               Никотин: {nicotinePct} %
               <br />
-              Зарядка: {chargingType.replaceAll('_', '-')}
+              Зарядка: {chargingType.replaceAll("_", "-")}
               <br />
-              Разнообразие вкуса: {flavourMode.replaceAll('_', ' ')}
+              Разнообразие вкуса: {flavourMode.replaceAll("_", " ")}
               <br />
+            </>
+          )}
+          {type === "CIGARETTE" && (
+            <>
+              Пачка: {(priceCentsPack / 100).toFixed(2)}€
+              <br />
+              Блок: {(priceCentsBlock / 100).toFixed(2)}€
             </>
           )}
           {hasFlavours && (

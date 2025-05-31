@@ -42,6 +42,7 @@ const SnusPage = () => {
               priceCents={product.priceTiers[0]?.priceCents || 0}
               quantity={product.stockItems[0]?.quantity || 0}
               variants={product.snusSpec?.variants || []}
+              type={product.type}
             />
           );
         })}
