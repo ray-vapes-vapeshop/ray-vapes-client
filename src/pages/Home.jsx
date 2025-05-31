@@ -1,7 +1,7 @@
 import Header from "../components/Header";
 import Product from "../components/Product";
 
-const products = [1, 2, 3, 4, 5, 6, 7];
+const products = [1, 2, 3];
 
 const Home = () => {
   return (

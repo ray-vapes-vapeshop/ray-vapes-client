@@ -6,7 +6,7 @@ const DeliveryPage = () => {
       <Header />
       <div className="h-18"></div>
       <div className="flex-grow flex-col flex items-center justify-center m-3">
-        <ul className="list bg-base-100 rounded-box shadow-md w-[50%] min-w-[250px] p-4">
+        <ul className="list bg-base-100 rounded-box shadow-md w-[70%] min-w-[250px] p-4">
           <li className="list-row">
             <div>
               <div className="font-bold text-lg">Оформление заказа</div>

@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import CartModal from "./CartModal";
 
 const Header = () => {
   return (
@@ -12,7 +13,6 @@ const Header = () => {
           />
         </Link>
 
-        {/* Desktop navigation */}
         <ul className="hidden md:flex menu menu-horizontal px-1 gap-4 items-center">
           <li>
             <Link to="/electronics">Электронные сигареты</Link>
@@ -34,11 +34,7 @@ const Header = () => {
         <div className="flex flex-row my-auto">
           {/* Cart Icon */}
           <div className="dropdown dropdown-end">
-            <div
-              tabIndex={0}
-              role="button"
-              className="btn btn-ghost btn-circle"
-            >
+            <label htmlFor="my_modal_6" className="btn">
               <div className="indicator">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -56,21 +52,9 @@ const Header = () => {
                 </svg>
                 <span className="badge badge-sm indicator-item">8</span>
               </div>
-            </div>
-            <div
-              tabIndex={0}
-              className="card card-compact dropdown-content bg-base-100 z-10 mt-3 w-52 shadow"
-            >
-              <div className="card-body">
-                <span className="text-lg font-bold">8 Items</span>
-                <span className="text-info">Subtotal: $999</span>
-                <div className="card-actions">
-                  <button className="btn btn-primary btn-block">
-                    View cart
-                  </button>
-                </div>
-              </div>
-            </div>
+            </label>
+            <input type="checkbox" id="my_modal_6" className="modal-toggle" />
+            <CartModal />
           </div>
 
           {/* Mobile Navigation Dropdown */}
@@ -103,7 +87,6 @@ const Header = () => {
                 className="drawer-overlay"
               ></label>
               <div className="menu bg-base-200 text-base-content min-h-full w-full p-4 relative">
-                {/* Кнопка закриття зверху */}
                 <label
                   htmlFor="my-drawer-4"
                   className="absolute top-7 right-3 cursor-pointer"
@@ -126,7 +109,7 @@ const Header = () => {
 
                 <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
                   <li className="p-2 mt-4">
-                    <Link to="/home">Главная</Link>
+                    <Link to="/">Главная</Link>
                   </li>
                   <li className="p-2">
                     <Link to="/electronics">Электронные сигареты</Link>
