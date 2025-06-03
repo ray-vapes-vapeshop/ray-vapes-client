@@ -14,11 +14,7 @@ const CartModal = () => {
       <div className="modal-box">
         <Cart />
         <div className="modal-action flex justify-between">
-          <label
-            htmlFor="my_modal_6"
-            className="btn"
-            onClick={handleClear}
-          >
+          <label htmlFor="my_modal_6" className="btn" onClick={handleClear}>
             Очистить
           </label>
           <label htmlFor="my_modal_6" className="btn">

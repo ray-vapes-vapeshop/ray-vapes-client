@@ -6,9 +6,26 @@ import SnusPage from "./pages/SnusPage";
 import CigarettesPage from "./pages/СigarettesPage";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
+import { ToastContainer, Flip } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 function App() {
   return (
     <Router>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={2000}
+        hideProgressBar={true}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        transition={Flip}
+      />
+
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/liquids" element={<LiquidPage />} />

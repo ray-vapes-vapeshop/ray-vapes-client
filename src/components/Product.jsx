@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../store/cartSlice";
 
+import { toast, Flip } from "react-toastify";
+
 const Product = ({
   id,
   name,
@@ -29,6 +31,18 @@ const Product = ({
       variantId: variant.id,
     };
     dispatch(addToCart(item));
+
+    toast.success("Товар добавлен в корзину!", {
+      position: "bottom-right",
+      autoClose: 2000,
+      hideProgressBar: true,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Flip,
+    });
   };
 
   return (

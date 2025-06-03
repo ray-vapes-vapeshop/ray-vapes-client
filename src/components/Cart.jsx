@@ -1,6 +1,8 @@
 import { useSelector, useDispatch } from "react-redux";
 import { removeFromCart } from "../store/cartSlice";
 
+import { toast, Flip } from "react-toastify";
+
 const Cart = () => {
   const items = useSelector((state) => state.cart.items);
   const totalCents = useSelector((state) => state.cart.totalCents);
@@ -8,10 +10,21 @@ const Cart = () => {
 
   const handleRemove = (id) => {
     dispatch(removeFromCart(id));
+    toast.success("Товар был удален из корзины!", {
+      position: "bottom-right",
+      autoClose: 2000,
+      hideProgressBar: true,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Flip,
+    });
   };
 
   return (
-    <div className="p-2 max-w-xl mx-auto max-h-[500px] overflow-auto">
+    <div className="p-2 max-w-xl mx-auto max-h-[520px] overflow-auto">
       <h2 className="text-xl font-bold mb-6 text-center">Корзина товаров:</h2>
 
       {items.length === 0 ? (
