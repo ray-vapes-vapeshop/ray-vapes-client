@@ -25,14 +25,14 @@ const DeliveryPage = () => {
                 Доступны следующие способы оплаты:
               </div>
             </div>
-            <p className="list-col-wrap text-md">
+            <div className="list-col-wrap text-md">
               • USDT (криптовалюта)
               <br />• Monobank <br />• Банковский счёт в Нидерландах (при
               доставке по стране)
-              <div className="list-col-wrap text-xs font-semibold opacity-60 mt-3">
+              <p className="list-col-wrap text-xs font-semibold opacity-60 mt-3">
                 При личной встрече возможна оплата наличными.
-              </div>
-            </p>
+              </p>
+            </div>
           </li>
 
           <li className="list-row">

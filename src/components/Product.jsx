@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../store/cartSlice";
 
 const Product = ({
   id,
@@ -15,8 +17,19 @@ const Product = ({
   type,
 }) => {
   const [, setModalId] = useState(null);
-
+  const dispatch = useDispatch();
   const hasFlavours = variants && variants.length > 0;
+
+  const handleAddToCart = (variant) => {
+    const item = {
+      id: `${id}-${variant.id}`,
+      productId: id,
+      name: `${name} - ${variant.flavour?.name || "Вкус"}`,
+      priceCents: priceCents,
+      variantId: variant.id,
+    };
+    dispatch(addToCart(item));
+  };
 
   return (
     <div className="card bg-base-100 w-[320px] shadow-md m-2">
@@ -64,29 +77,43 @@ const Product = ({
           )}
         </div>
       </div>
-      <div className="flex w-full justify-between ml-1">
-        <input type="checkbox" id={`modal-${id}`} className="modal-toggle" />
-        <div className="modal" role="dialog">
-          <div className="modal-box">
-            <h3 className="font-bold text-lg mb-2">Вкусы: {name}</h3>
 
-            {variants && variants.length > 0 ? (
-              <ul className="list bg-base-100 rounded-box text-md font-semibold">
-                {variants.map((variant) => (
-                  <li key={variant.id} className="list-row">
-                    {variant.flavour?.name || "Неизвестный вкус"}
+      <input type="checkbox" id={`modal-${id}`} className="modal-toggle" />
+      <div className="modal" role="dialog">
+        <div className="modal-box">
+          <h3 className="font-bold text-lg mb-2">Вкусы: {name}</h3>
+
+          {variants && variants.length > 0 ? (
+            <ul className="space-y-2 list max-h-[400px] overflow-auto">
+              {variants.map((variant) => (
+                <>
+                  <li
+                    key={variant.id}
+                    className="flex items-center justify-between list-row"
+                  >
+                    <span>{variant.flavour?.name || "Неизвестный вкус"}</span>
+                    <button
+                      className=""
+                      onClick={() => handleAddToCart(variant)}
+                    >
+                      <img
+                        src="../assets/icons/addToCartIcon.svg"
+                        alt="add to cart"
+                        className="h-[22px] w-[22px] cursor-pointer"
+                      />
+                    </button>
                   </li>
-                ))}
-              </ul>
-            ) : (
-              <p className="text-gray-500">Нет информации о вкусах.</p>
-            )}
+                </>
+              ))}
+            </ul>
+          ) : (
+            <p className="text-gray-500">Нет информации о вкусах.</p>
+          )}
 
-            <div className="modal-action">
-              <label htmlFor={`modal-${id}`} className="btn">
-                Закрыть
-              </label>
-            </div>
+          <div className="modal-action">
+            <label htmlFor={`modal-${id}`} className="btn">
+              Закрыть
+            </label>
           </div>
         </div>
       </div>
