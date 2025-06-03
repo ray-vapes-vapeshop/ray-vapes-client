@@ -26,8 +26,8 @@ const Product = ({
     const item = {
       id: `${id}-${variant.id}`,
       productId: id,
-      name: `${name} - ${variant.flavour?.name || "Вкус"}`,
-      priceCents: priceCents,
+      name: variant.flavour?.name ? `${name} - ${variant.flavour.name}` : name,
+      priceCents: priceCents || priceCentsPack || priceCentsBlock || 0,
       variantId: variant.id,
     };
     dispatch(addToCart(item));
@@ -78,7 +78,7 @@ const Product = ({
             </>
           )}
           {type === "LIQUID" && <>Цена - {(priceCents / 100).toFixed(2)}€</>}
-          {hasFlavours && (
+          {hasFlavours ? (
             <div className="mt-3 w-[150px]">
               <label
                 htmlFor={`modal-${id}`}
@@ -87,6 +87,19 @@ const Product = ({
               >
                 Вкусы
               </label>
+            </div>
+          ) : (
+            <div className="mt-3 w-[150px]">
+              <button
+              className="absolute top-15 right-4"
+                onClick={handleAddToCart}
+              >
+                <img
+                  src="../assets/icons/addToCartIcon.svg"
+                  alt="add to cart"
+                  className="h-[22px] w-[22px] cursor-pointer"
+                />
+              </button>
             </div>
           )}
         </div>
@@ -106,10 +119,7 @@ const Product = ({
                     className="flex items-center justify-between list-row"
                   >
                     <span>{variant.flavour?.name || "Неизвестный вкус"}</span>
-                    <button
-                      className=""
-                      onClick={() => handleAddToCart(variant)}
-                    >
+                    <button onClick={() => handleAddToCart(variant)}>
                       <img
                         src="../assets/icons/addToCartIcon.svg"
                         alt="add to cart"
