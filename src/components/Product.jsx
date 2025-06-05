@@ -91,7 +91,7 @@ const Product = ({
           ) : (
             <div className="mt-3 w-[150px]">
               <button
-              className="absolute top-15 right-4"
+                className="absolute top-15 right-4"
                 onClick={handleAddToCart}
               >
                 <img
