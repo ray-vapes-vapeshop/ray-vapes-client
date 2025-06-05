@@ -2,30 +2,43 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Product from "./Product";
 
-const ProductList = ({ type, extraParams = {} }) => {
+const ProductList = ({ type, extraParams = {}, sort = { id: "asc" }, isBestseller }) => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
+    const params = {
+      currentPage: 1,
+      pageSize: 10,
+      sortBy: { id: "asc" },
+      type,
+      ...extraParams,
+    };
+
+    if (typeof isBestseller === "boolean") {
+      params.isBestseller = isBestseller;
+    }
+
     axios
-      .get("http://localhost:5050/api/products", {
-        params: {
-          currentPage: 1,
-          pageSize: 10,
-          "sortBy[id]": "asc",
-          type,
-          ...extraParams,
-        },
-      })
+      .get("http://localhost:5050/api/products", { params })
       .then((response) => {
-        const data = response.data;
-        if (data.success && data.data && Array.isArray(data.data.content)) {
-          setProducts(data.data.content);
+        let items = response.data?.data?.content || [];
+
+        if (sort?.priceCents) {
+          items = items.sort((a, b) => {
+            const aPrice = a.priceTiers?.[0]?.priceCents ?? 0;
+            const bPrice = b.priceTiers?.[0]?.priceCents ?? 0;
+            return sort.priceCents === "asc"
+              ? aPrice - bPrice
+              : bPrice - aPrice;
+          });
         }
+
+        setProducts(items);
       })
       .catch((error) => {
         console.error("Error fetching products:", error);
       });
-  }, [type, JSON.stringify(extraParams)]);
+  }, [type, JSON.stringify(extraParams), JSON.stringify(sort), isBestseller]);
 
   return (
     <>

@@ -35,7 +35,16 @@ const Header = () => {
         </ul>
 
         <div className="flex flex-row mt-6 mx-6">
-          <div className="dropdown dropdown-end">
+          <div className="dropdown dropdown-end flex gap-4">
+            <div className="indicator">
+              <Link to="/">
+                <img
+                  src="../assets/icons/homePageIcon.svg"
+                  alt="home page icon"
+                  className="h-5 w-5 cursor-pointer"
+                />
+              </Link>
+            </div>
             <label htmlFor="my_modal_6" className="cursor-pointer">
               <div className="indicator">
                 <svg
@@ -53,7 +62,10 @@ const Header = () => {
                   />
                 </svg>
                 <span className="badge badge-sm indicator-item bg-yellow-100 border-yellow-200 rounded-full">
-                  <label className="text-yellow-900 text-xs">{items.length}</label></span>
+                  <label className="text-yellow-900 text-xs">
+                    {items.length}
+                  </label>
+                </span>
               </div>
             </label>
             <input type="checkbox" id="my_modal_6" className="modal-toggle" />

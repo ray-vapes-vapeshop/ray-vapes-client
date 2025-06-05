@@ -1,54 +1,23 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import Product from "../components/Product";
+import { useState } from "react";
+import ProductList from "../components/ProductList";
 import Header from "../components/Header";
+import SortDropdown from "../components/SortDropdown";
 
 const HomePage = () => {
-  const [products, setProducts] = useState([]);
+  const [sort, setSort] = useState({ id: "asc" });
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:5050/api/products", {
-        params: {
-          currentPage: 1,
-          pageSize: 10,
-          "sortBy[id]": "asc",
-          isBestseller: true,
-        },
-      })
-      .then((response) => {
-        const data = response.data;
-        if (data.success && data.data && Array.isArray(data.data.content)) {
-          setProducts(data.data.content);
-        }
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  }, []);
+  const handleSortChange = (value) => {
+    if (value === "price-asc") setSort({ priceCents: "asc" });
+    else if (value === "price-desc") setSort({ priceCents: "desc" });
+    else setSort({ id: "asc" });
+  };
 
   return (
     <>
       <Header />
       <div className="h-18"></div>
-      <div className="flex flex-wrap items-start gap-4 p-4 justify-center">
-        {products.map((product) => (
-          <Product
-            key={product.id}
-            id={product.id}
-            name={product.name}
-            imageUrl={product.imageUrl}
-            priceCents={product.priceTiers[0]?.priceCents || 0}
-            quantity={product.stockItems[0]?.quantity || 0}
-            variants={product.electronicSpec?.variants || []}
-            puffs={product.electronicSpec?.puffs}
-            nicotinePct={product.electronicSpec?.nicotinePct}
-            chargingType={product.electronicSpec?.chargingType}
-            flavourMode={product.electronicSpec?.flavourMode}
-            type={product.type}
-          />
-        ))}
-      </div>
+      <SortDropdown onChange={handleSortChange} />
+      <ProductList sort={sort} />
     </>
   );
 };
