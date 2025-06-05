@@ -1,4 +1,4 @@
-import Home from "./pages/Home";
+import HomePage from "./pages/HomePage";
 import LiquidPage from "./pages/LiquidPage";
 import DeliveryPage from "./pages/DeliveryPage";
 import ElectronicPage from "./pages/ElectronicPage";
@@ -27,7 +27,7 @@ function App() {
       />
 
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<HomePage />} />
         <Route path="/liquids" element={<LiquidPage />} />
         <Route path="/delivery" element={<DeliveryPage />} />
         <Route path="/electronics" element={<ElectronicPage />} />
