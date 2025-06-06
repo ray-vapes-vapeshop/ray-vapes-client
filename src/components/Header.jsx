@@ -36,7 +36,7 @@ const Header = () => {
 
         <div className="flex flex-row mt-6 mx-6">
           <div className="dropdown dropdown-end flex gap-4">
-            <div className="indicator">
+            <div className="indicator hidden md:block">
               <Link to="/">
                 <img
                   src="../assets/icons/homePageIcon.svg"
@@ -46,7 +46,7 @@ const Header = () => {
               </Link>
             </div>
             <label htmlFor="my_modal_6" className="cursor-pointer">
-              <div className="indicator">
+              <div className="indicator mr-3">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-5 w-5"
@@ -74,7 +74,7 @@ const Header = () => {
 
           <div className="drawer drawer-end md:hidden my-auto">
             <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
-            <div className="drawer-content">
+            <div className="drawer-content mb-5">
               <label htmlFor="my-drawer-4">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
