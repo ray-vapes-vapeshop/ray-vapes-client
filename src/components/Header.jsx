@@ -1,6 +1,8 @@
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import CartModal from "./CartModal";
+import OrderFormModal from "./OrderFormModal";
+import OrderSuccessModal from "./OrderSuccessModal";
 
 const Header = () => {
   const items = useSelector((state) => state.cart.items);
@@ -70,6 +72,9 @@ const Header = () => {
             </label>
             <input type="checkbox" id="my_modal_6" className="modal-toggle" />
             <CartModal />
+            <input type="checkbox" id="order_modal" className="modal-toggle" />
+            <OrderFormModal />
+            <OrderSuccessModal />
           </div>
 
           <div className="drawer drawer-end md:hidden my-auto">

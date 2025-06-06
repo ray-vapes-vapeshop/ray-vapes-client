@@ -25,7 +25,7 @@ const Cart = () => {
 
   return (
     <div className="p-2 max-w-xl mx-auto max-h-[520px] overflow-auto">
-      <h2 className="text-xl font-bold mb-6 text-center">Корзина товаров:</h2>
+      <h2 className="text-lg font-bold mb-4 text-center">Корзина товаров:</h2>
 
       {items.length === 0 ? (
         <p className="text-gray-500">Корзина пуста.</p>
