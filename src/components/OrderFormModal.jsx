@@ -86,23 +86,31 @@ const OrderFormModal = () => {
     document.getElementById("my_modal_6").checked = false;
 
     const orderSummary = `
-        Имя: ${data.firstName} ${data.lastName}
-        Адрес: ${data.address}
-        Метод: ${data.orderMethod === "MEET" ? "Личная встреча" : "Доставка"}
-    ${data.pickupLocation ? `Город встречи: ${data.pickupLocation}` : ""}
-        Telegram: @${data.telegramNickname}
-        Email: ${data.email}
+1. Имя: ${data.firstName} ${data.lastName}
+2. Адрес: ${data.address}
+3. Метод: ${data.orderMethod === "MEET" ? "Личная встреча" : "Доставка"}
+${
+  data.orderMethod === "MEET" && data.pickupLocation
+    ? `Город встречи: ${data.pickupLocation}`
+    : ""
+}
+${
+  data.orderMethod === "DELIVERY" && data.deliveryNotes
+    ? `Город доставки: ${data.deliveryNotes}`
+    : ""
+}
+4. Telegram: ${data.telegramNickname}
+5. Email: ${data.email}
 
-        Список товаров:
+Список товаров:
 ${items
   .map(
     (item, i) =>
       `${i + 1}. ${item.name} — ${(item.priceCents / 100).toFixed(2)} €`
   )
   .join("\n")}
-        Сумма: ${(
-          items.reduce((acc, i) => acc + i.priceCents, 0) / 100
-        ).toFixed(2)} €`;
+Сумма: ${(items.reduce((acc, i) => acc + i.priceCents, 0) / 100).toFixed(2)} €
+`;
 
     dispatch(clearCart());
     setOrderText(orderSummary);
