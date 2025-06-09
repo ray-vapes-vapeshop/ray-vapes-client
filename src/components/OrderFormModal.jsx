@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -13,7 +14,8 @@ const schema = z.object({
   address: z.string().min(2, "Обязательное поле"),
   email: z.string().email("Некорректный email"),
   telegramNickname: z.string().min(1, "Обязательное поле"),
-  orderMethod: z.enum(["MEET", "DELIVERY"]),
+  phoneNumber: z.string().min(5, "Обязательное поле"),
+  orderMethod: z.enum(["PICKUP", "DELIVERY"]),
   pickupLocation: z.string().optional(),
   deliveryNotes: z.string().optional(),
 });
@@ -44,77 +46,89 @@ const OrderFormModal = () => {
     resolver: zodResolver(schema),
   });
 
-  //   const onSubmit = async (data) => {
-  //     if (items.length === 0) {
-  //       toast.error("Корзина пуста.");
-  //       return;
-  //     }
-
-  //     const orderData = {
-  //       ...data,
-  //       items: items.map((item) => ({
-  //         productId: item.productId,
-  //         quantity: item.quantity || 1,
-  //         priceCents: item.priceCents,
-  //         variantId: item.variantId || null,
-  //       })),
-  //     };
-
-  //     try {
-  //       const res = await fetch("/api/orders", {
-  //         method: "POST",
-  //         headers: { "Content-Type": "application/json" },
-  //         body: JSON.stringify(orderData),
-  //       });
-
-  //       if (!res.ok) throw new Error("Помилка при створенні замовлення");
-
-  //       toast.success("Заказ успешно оформлен!");
-  //       dispatch(clearCart());
-  //     } catch (error) {
-  //       toast.error(error);
-  //     }
-  //   };
-
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     if (items.length === 0) {
       toast.error("Корзина пуста");
       return;
     }
 
-    document.getElementById("order_modal").checked = false;
-    document.getElementById("my_modal_6").checked = false;
+    const payload = {
+      firstName: data.firstName,
+      lastName: data.lastName,
+      address: data.address,
+      email: data.email,
+      telegramNickname: data.telegramNickname,
+      phoneNumber: data.phoneNumber,
+      orderMethod: data.orderMethod,
+      pickupLocation: data.orderMethod === "PICKUP" ? data.pickupLocation : "",
+      deliveryNotes:
+        data.orderMethod === "DELIVERY" ? data.deliveryNotes || "" : "",
+      items: items.map((item) => ({
+        name: item.product?.name,
+        productId: item.productId,
+        quantity: item.quantity || 1,
+        priceCents: item.priceCents,
+        ...(item.variantId ? { variantId: item.variantId } : {}),
+      })),
+    };
 
-    const orderSummary = `
-1. Имя: ${data.firstName} ${data.lastName}
-2. Адрес: ${data.address}
-3. Метод: ${data.orderMethod === "MEET" ? "Личная встреча" : "Доставка"}
-${
-  data.orderMethod === "MEET" && data.pickupLocation
-    ? `Город встречи: ${data.pickupLocation}`
-    : ""
-}
-${
-  data.orderMethod === "DELIVERY" && data.deliveryNotes
-    ? `Город доставки: ${data.deliveryNotes}`
-    : ""
-}
-4. Telegram: ${data.telegramNickname}
-5. Email: ${data.email}
+    try {
+      const response = await axios.post(
+        "http://localhost:5050/api/orders",
+        payload,
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      );
 
-Список товаров:
-${items
-  .map(
-    (item, i) =>
-      `${i + 1}. ${item.name} — ${(item.priceCents / 100).toFixed(2)} €`
-  )
-  .join("\n")}
-Сумма: ${(items.reduce((acc, i) => acc + i.priceCents, 0) / 100).toFixed(2)} €
+      const result = response.data;
+      console.log(result);
+
+      document.getElementById("order_modal").checked = false;
+      document.getElementById("my_modal_6").checked = false;
+
+      dispatch(clearCart());
+
+      const orderItems = result.data.items.map((item, i) => {
+        const name = item.product?.name || "Неизвестный товар";
+        const flavour = item.product?.variant?.flavour?.name;
+        const fullName = flavour ? `${name} (${flavour})` : name;
+        const priceEuro = (item.priceCents / 100).toFixed(2);
+        return `${i + 1}. Название товара: ${fullName}, Кол-во: ${
+          item.quantity
+        }, Цена: ${priceEuro} €`;
+      });
+
+      const totalCents = result.data.items.reduce(
+        (sum, item) => sum + item.priceCents * item.quantity,
+        0
+      );
+      const totalEuros = (totalCents / 100).toFixed(2);
+
+      const orderSummary = `
+  Имя: ${result.data.firstName} ${result.data.lastName}
+  Адрес: ${result.data.address}
+  Метод: ${result.data.orderMethod === "PICKUP" ? "Личная встреча" : "Доставка"}
+  ${
+    result.data.pickupLocation
+      ? "Город встречи: " + result.data.pickupLocation
+      : ""
+  }
+  Телефон: ${result.data.phoneNumber}
+  Telegram: ${result.data.telegramNickname}
+  Email: ${result.data.email}
+
+  Товары:
+  ${orderItems.join("\n")}
+  Общая сумма: ${totalEuros} €
 `;
 
-    dispatch(clearCart());
-    setOrderText(orderSummary);
-    setIsSuccessOpen(true);
+      setOrderText(orderSummary);
+      setIsSuccessOpen(true);
+      toast.success("Заказ успешно отправлен!");
+    } catch (error) {
+      toast.error(error.message || "Ошибка при отправке заказа");
+    }
   };
 
   return (
@@ -173,16 +187,27 @@ ${items
               </p>
             )}
 
+            <input
+              {...register("phoneNumber")}
+              placeholder="Телефон"
+              className="input input-bordered w-full"
+            />
+            {errors.phoneNumber && (
+              <p className="text-red-500 text-xs">
+                {errors.phoneNumber.message}
+              </p>
+            )}
+
             <select
               {...register("orderMethod")}
               onChange={(e) => setOrderMethod(e.target.value)}
               className="select select-bordered w-full"
             >
               <option value="DELIVERY">Доставка</option>
-              <option value="MEET">Личная встреча</option>
+              <option value="PICKUP">Личная встреча</option>
             </select>
 
-            {orderMethod === "MEET" && (
+            {orderMethod === "PICKUP" && (
               <select
                 {...register("pickupLocation")}
                 className="select select-bordered w-full"

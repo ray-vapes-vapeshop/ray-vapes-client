@@ -107,7 +107,7 @@ const Header = () => {
               <div className="menu bg-base-200 text-base-content min-h-full w-full p-4 relative">
                 <label
                   htmlFor="my-drawer-4"
-                  className="absolute top-7 right-3 cursor-pointer"
+                  className="absolute top-9 right-9 cursor-pointer"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
