@@ -74,7 +74,7 @@ const OrderFormModal = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5050/api/orders",
+        "https://ray-vapes-api.onrender.com/api/orders",
         payload,
         {
           headers: { "Content-Type": "application/json" },

@@ -2,7 +2,12 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Product from "./Product";
 
-const ProductList = ({ type, extraParams = {}, sort = { id: "asc" }, isBestseller }) => {
+const ProductList = ({
+  type,
+  extraParams = {},
+  sort = { id: "asc" },
+  isBestseller,
+}) => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -19,7 +24,7 @@ const ProductList = ({ type, extraParams = {}, sort = { id: "asc" }, isBestselle
     }
 
     axios
-      .get("http://localhost:5050/api/products", { params })
+      .get("https://ray-vapes-api.onrender.com/api/products", { params })
       .then((response) => {
         let items = response.data?.data?.content || [];
 
