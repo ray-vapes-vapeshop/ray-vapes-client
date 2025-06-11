@@ -13,7 +13,7 @@ const Header = () => {
         <Link to="/">
           <img
             className="h-14 w-17 ml-4 my-1"
-            src="./assets/logos/Logo.png"
+            src="/assets/logos/Logo.png"
             alt="Logo"
           />
         </Link>
@@ -41,7 +41,7 @@ const Header = () => {
             <div className="indicator hidden md:block">
               <Link to="/">
                 <img
-                  src="./assets/icons/homePageIcon.svg"
+                  src="/assets/icons/homePageIcon.svg"
                   alt="home page icon"
                   className="h-5 w-5 cursor-pointer"
                 />
